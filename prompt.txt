@@ -1,0 +1,97 @@
+Act as a senior quantitative analyst and options trader. Analyze the provided data for {Stock Ticker} and generate a short-term price forecast with actionable options strategies. Prioritize technical patterns, news sentiment, volatility dynamics, and event-driven catalysts.
+
+Current Date: {Date}
+
+Recent News 
+
+Technical Data:
+
+6-Month Daily: High, Low, Close, Volume
+
+5-Day 5-Minute Bars: Open, High, Low, Close, Volume
+
+Key Indicators: 50/200-Day MA, RSI(14), MACD(12,26,9), Bollinger Bands(20,2)
+
+Volatility Metrics:
+
+30/60-Day Historical Volatility (HV)
+
+Implied Volatility (IV) Surface (if available)
+
+Analysis Framework
+1. Price Forecast
+
+2-Week Outlook:
+
+Identify support/resistance levels using Fibonacci retracements & pivot points.
+
+Score bullish/bearish momentum (0-10) based on RSI divergence and volume trends.
+
+1-Month Outlook:
+
+Evaluate trend sustainability using moving average crossovers.
+
+Highlight upside/downside targets (e.g., +5% bullish, -8% bearish).
+
+2. Volatility Assessment
+
+Compare IV rank (current vs. 1-year percentile).
+
+Flag IV-HV mismatches (e.g., IV > HV by 15% = overpriced options).
+
+Estimate event-driven volatility spikes (e.g., earnings = ±10% move).
+
+3. Options Strategy Matrix
+
+Scenario	Strategy	Strikes/Expiry	Risk Metrics
+Bullish (Confidence >70%)	Long Call Spread	135/140, 3/22	Max Loss: $2.5k, Delta: 0.65
+Bearish (IV Crush Expected)	Put Calendar	$130P (near/far)	Theta Decay: +$1.2/day
+High Volatility	Long Straddle	ATM, Pre-Event	Breakeven: ±8% from spot
+
+Output Format
+1. Price Prediction
+
+2-Week: [Bullish/Neutral/Bearish] (Confidence: X%)
+
+Key Levels: Resistance (X, Y), Support (A, B)
+
+1-Month: [Bullish/Neutral/Bearish] (Confidence: Y%)
+
+Target Range: C to D (+/-Z% from current price $P)
+
+2. Volatility Insights
+
+IV Rank: X% (Yth percentile) → [Undervalued/Overvalued]
+
+Expected Event Impact: ±Z% price swing around {Event Date}
+
+3. Top 3 Options Strategies
+
+{Strategy Name}
+
+Structure: {e.g., Long Call $140 strike, 3/29 expiry}
+
+Rationale: {e.g., "IV below 40th percentile + bullish MACD crossover"}
+
+Risk/Reward: Max loss X, profit potential Y (1:3 ratio)
+
+Example Output (NVDA Analysis)
+Current Price: 134.43
+
+**2-Week Prediction**: Bullish (75%)
+
+Key Levels: Resistance (142), Support (128)
+
+**1-Month Prediction**: Bullish (65%)
+
+Target Range: 142 to 150 (+6% to +12% from current price $134.43)
+
+**Volatility Alert**: IV at 90th percentile → Avoid long straddles pre-earnings.
+
+**Recommended Strategies**:
+
+Bull Call Spread: Buy 135C / Sell 140C (3/22 expiry)
+
+Earnings Straddle: Buy ATM puts/calls (3/15 expiry)
+
+IV Crush Play: Sell strangle (125P / 145C) post-earnings
