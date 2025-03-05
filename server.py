@@ -1,31 +1,78 @@
 # Filename - server.py
 
-# Import flask, CORS, and datetime module for showing date and time
+# Import necessary modules
+import json
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import datetime
-from search import search_google
-from load_csv import load_csv
-from search import ask_chatgpt
+from search import search_google, ask_chatgpt, preprocess_news, process_json
+from load_csv import get_daily_stock_data, get_intraday_stock_data
 
-# Initializing flask app
+# Initialize Flask app
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
-
-# Route for seeing a data
-@app.route('/result/<path:query>')
-def get_result(query):
-    # Flask automatically URL-decodes the query parameter
-    # Now handles spaces (%20) and special characters properly
+# Route for retrieving data
+@app.route('/result/<path:query>/<model>')
+def get_result(query, model):
     symbol = query
-    # Example Usage
-    news = search_google(symbol)
-    daily_data = load_csv('daily_stock_data.csv')
-    min15_data = load_csv('intraday_stock_data.csv')
-    response = ask_chatgpt(symbol, news, daily_data, min15_data)
-    return jsonify(response)
 
-# Running app
+    try:
+        news = search_google(symbol)
+        processed_news = preprocess_news(news)
+        print("--------------------------------news processed--------------------------------")
+
+        daily_data = get_daily_stock_data(symbol)
+        print("--------------------------------daily data fetched--------------------------------")
+
+        min15_data = get_intraday_stock_data(symbol)
+        print("--------------------------------intraday data fetched--------------------------------")
+
+        response = ask_chatgpt(symbol, processed_news, model, daily_data, min15_data)
+        print("--------------------------------response fetched--------------------------------")
+        print(response)
+
+        analysis = process_json(response)
+        print("--------------------------------analysis fetched--------------------------------")
+        print(analysis)
+        return analysis
+
+    except json.JSONDecodeError as e:
+        print(f"Failed to parse JSON: {e}")
+        print("Raw response:")
+        print(analysis)
+        return {"error": "Failed to parse JSON"}
+
+
+@app.route('/test/<model>')
+def test(model):
+    symbol = "MSFT"
+    try:
+        news = search_google(symbol)
+        processed_news = preprocess_news(news)
+        print("--------------------------------news processed--------------------------------")
+
+        with open('daily_stock_data.csv', 'r') as daily_file:
+            daily_data = daily_file.read()
+        print("--------------------------------daily data fetched--------------------------------")
+
+        with open('intraday_stock_data.csv', 'r') as intraday_file:
+            min15_data = intraday_file.read()
+        print("--------------------------------intraday data fetched--------------------------------")
+
+        response = ask_chatgpt(symbol, processed_news, model, daily_data, min15_data)
+        print("--------------------------------response fetched--------------------------------")
+        print(response)
+
+        analysis = process_json(response)
+        print("--------------------------------analysis fetched--------------------------------")
+        print(analysis)
+        return analysis
+
+    except json.JSONDecodeError as e:
+        print(f"Failed to parse JSON: {e}")
+        print("Raw response:")
+        print(analysis)
+        return {"error": "Failed to parse JSON"}
+# Run the app
 if __name__ == '__main__':
     app.run(debug=True)

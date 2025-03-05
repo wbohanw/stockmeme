@@ -78,7 +78,7 @@ def load_csv(file_path):
     return matrix
 
 if __name__ == "__main__":
-    symbol = "TSLA"
+    symbol = "MSFT"
     # Fetch Data
     daily_data = get_daily_stock_data(symbol)
     intraday_data = get_intraday_stock_data(symbol)
