@@ -27,7 +27,7 @@ cd stockmeme
 pip install -e .
 ```
 
-3. Set up environment variables
+### Environment Setup
 Create a `.env` file in the root directory with your API keys:
 ```
 OPENROUTER_API_KEY=your_openrouter_api_key
@@ -35,16 +35,28 @@ OPENROUTER_API_KEY=your_openrouter_api_key
 
 ## Usage
 
-1. Run the server
+### Local Development
+Run the server locally:
 ```bash
 python server.py
 ```
 
-2. Access the API at `http://localhost:5000/result/<stock_symbol>/<model>`
+Access the API at `http://localhost:5000/result/<stock_symbol>/<model>`
 
 Example:
 ```
 http://localhost:5000/result/NVDA/deepseek-r1
+```
+
+### Deployment
+The project includes files for deployment to platforms like Heroku:
+- `Procfile` - Specifies the command to run the server
+- `runtime.txt` - Specifies the Python version (3.9.18)
+
+To deploy to Heroku:
+```bash
+heroku create
+git push heroku main
 ```
 
 ## Available Models
@@ -53,3 +65,17 @@ http://localhost:5000/result/NVDA/deepseek-r1
 - gemini-flash-lite-2.0
 - gemini-flash-thinking-exp
 - gemini-pro-2.0
+
+## Troubleshooting
+
+### Package Installation Issues
+If you encounter installation errors, particularly with pandas:
+1. Try using a Python version between 3.7 and 3.11 (3.9 recommended)
+2. Install numpy first: `pip install numpy==1.24.3`
+3. Then install other requirements: `pip install -r requirements.txt`
+
+### API Key Issues
+If you receive authentication errors:
+1. Verify your OPENROUTER_API_KEY is correct
+2. Check if you have reached API rate limits
+3. Try a different LLM model in your request
