@@ -1,0 +1,8 @@
+include README.md
+include requirements.txt
+include prompt.txt
+include prompt2.txt
+include *.csv
+include .env.example
+include Procfile
+include runtime.txt 
