@@ -2,6 +2,7 @@
 
 # Import necessary modules
 import json
+import os
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from search import search_google, ask_chatgpt, preprocess_news, process_json
@@ -73,6 +74,14 @@ def test(model):
         print("Raw response:")
         print(analysis)
         return {"error": "Failed to parse JSON"}
+
+# Health check endpoint
+@app.route('/')
+def health_check():
+    return jsonify({"status": "ok", "message": "StockMeme API is running"})
+
 # Run the app
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Get port from environment variable or default to 5000
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
